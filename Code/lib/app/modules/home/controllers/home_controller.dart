@@ -12,6 +12,9 @@ class HomeController extends GetxController {
       listPerson!.add(DB!.getAt(i));
     }
   }
+
+  //Add Screen
+  String? nameAdd, phoneAdd, emailAdd;
   @override
   void onInit() async{
 
@@ -25,4 +28,10 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
+
+  void addPerson(){
+    listPerson!.add(new Person(name: nameAdd.toString(), phone: phoneAdd.toString(), email: emailAdd.toString()));
+    DB!.add(new Person(name: nameAdd.toString(), phone: phoneAdd.toString(), email: emailAdd.toString()));
+    update();
+  }
 }

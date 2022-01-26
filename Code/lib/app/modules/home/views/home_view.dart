@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:init_project/app/modules/home/views/add_person_screen.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -12,12 +13,20 @@ class HomeView extends GetView<HomeController> {
         title: Text('HomeView'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          '${controller.listPerson![0]!.email}',
-          style: TextStyle(fontSize: 20),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => AddPersonScreen());
+        },
+        child: Icon(Icons.add),
       ),
+      body: ListView.builder(
+        itemCount: controller.DB!.values.length,
+        itemBuilder: (context, index){
+          return ListTile(
+            title: Text('${controller.listPerson![index]!.name}'),
+          );
+        },
+      )
     );
   }
 }
