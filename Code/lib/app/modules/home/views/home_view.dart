@@ -14,7 +14,7 @@ class HomeView extends GetView<HomeController> {
       ),
       body: Center(
         child: Text(
-          'HomeView is working',
+          '${controller.listPerson![0]!.email}',
           style: TextStyle(fontSize: 20),
         ),
       ),

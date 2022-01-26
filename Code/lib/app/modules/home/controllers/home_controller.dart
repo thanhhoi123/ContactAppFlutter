@@ -1,11 +1,20 @@
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:init_project/app/data/person.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
-  final count = 0.obs;
+  List<Person?>? listPerson;  
+  Box<Person>? DB;
+  HomeController() {
+    DB = Hive.box('DB');
+    listPerson = [];
+    for(int i = 0; i < DB!.values.length; i++){
+      listPerson!.add(DB!.getAt(i));
+    }
+  }
   @override
-  void onInit() {
+  void onInit() async{
+
     super.onInit();
   }
 
@@ -16,5 +25,4 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }
