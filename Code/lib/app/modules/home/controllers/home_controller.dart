@@ -18,6 +18,7 @@ class HomeController extends GetxController {
   }
 
   final length = 0.obs;
+  List<Person?>? listSearch;
 
   //Add Screen
   String? nameAdd, phoneAdd, emailAdd;
@@ -31,7 +32,20 @@ class HomeController extends GetxController {
   @override
   void onInit() async{
     length.value = DB!.values.length;
+    listSearch = listPerson!;    
     super.onInit();
+  }
+
+  void search(String value){
+    
+    if(value == ''){
+      listPerson = listSearch;
+      length.value = listPerson!.length;
+    }
+    else{
+      listPerson = listPerson!.where((element) => element!.name!.toLowerCase().contains(value.toLowerCase())).toList();
+      length.value = listPerson!.length;
+    }
   }
 
   void addPerson(){
