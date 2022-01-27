@@ -17,34 +17,46 @@ class HomeController extends GetxController {
     }
   }
 
+  final length = 0.obs;
+
   //Add Screen
   String? nameAdd, phoneAdd, emailAdd;
   final selectedImagePath = ''.obs;
+
+  //Edit Screen
+  Person? currenPersonEdit;
+  int? currentIndex;
+  String? nameEdit, phoneEdit, emailEdit;
+
   @override
   void onInit() async{
-
+    length.value = DB!.values.length;
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
 
   void addPerson(){
     Person person = new Person(name: nameAdd.toString(), phone: phoneAdd.toString(), email: emailAdd.toString(), image: selectedImagePath.toString()); 
     listPerson!.add(person);
     DB!.add(person);
     update();
+    length.value++;
     selectedImagePath.value = '';
   }
 
   void deletePerson(int index){
     listPerson!.removeAt(index);
     DB!.deleteAt(index);
+    length.value--;
+  }
+
+  void editPerson(int index, String name, String phone, String email, String image){
+    Person? person = listPerson![index];
+    person!.name = name;
+    person.phone = phone;
+    person.email = email;
+    person.image = image;
+    DB!.putAt(index, person);
+    listPerson![index] = person;
   }
 
   Future<void> pickImage(ImageSource source) async{

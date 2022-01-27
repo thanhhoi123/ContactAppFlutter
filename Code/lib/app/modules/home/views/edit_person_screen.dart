@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:init_project/app/modules/home/controllers/home_controller.dart';
 import 'package:init_project/app/modules/home/views/home_view.dart';
 
-class AddPersonScreen extends GetView<HomeController>{
+class EditPersonScreen extends GetView<HomeController>{
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width ;
@@ -18,7 +19,13 @@ class AddPersonScreen extends GetView<HomeController>{
         actions: <Widget>[
           IconButton(
             onPressed: (){
-              controller.addPerson();
+              controller.editPerson(
+                controller.currentIndex!.toInt(), 
+                controller.nameEdit.toString(), 
+                controller.phoneEdit.toString(), 
+                controller.emailEdit.toString(), 
+                controller.selectedImagePath.toString()
+              );
               Get.to(() => HomeView());
             }, 
             icon: Icon(Icons.check)
@@ -38,9 +45,7 @@ class AddPersonScreen extends GetView<HomeController>{
                   children: [
                     Center(
                       child: Obx((){
-                        return controller.selectedImagePath.value == '' ?
-                          Image.asset('assets/image_default.png', color: Colors.white,):
-                          Image.file(File(controller.selectedImagePath.value));
+                        return Image.file(File(controller.selectedImagePath.value));
                       }),
                     ),
                     Positioned(
@@ -85,8 +90,9 @@ class AddPersonScreen extends GetView<HomeController>{
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: TextField(
-                          onSubmitted: (value) => controller.nameAdd = value,
+                        child: TextFormField(
+                          initialValue: '${controller.nameEdit}',
+                          onFieldSubmitted: (value) => controller.nameEdit = value,
                         ),
                       ),
                     ),
@@ -101,8 +107,9 @@ class AddPersonScreen extends GetView<HomeController>{
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: TextField(
-                          onSubmitted: (value) => controller.phoneAdd = value,
+                        child: TextFormField(
+                          initialValue: '${controller.phoneEdit}',
+                          onFieldSubmitted: (value) => controller.phoneEdit = value,
                         ),
                       ),
                     ),
@@ -117,8 +124,9 @@ class AddPersonScreen extends GetView<HomeController>{
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: TextField(
-                          onSubmitted: (value) => controller.emailAdd = value,
+                        child: TextFormField(
+                          initialValue: '${controller.emailEdit}',
+                          onFieldSubmitted: (value) => controller.emailEdit = value,
                         ),
                       ),
                     ),
@@ -130,5 +138,6 @@ class AddPersonScreen extends GetView<HomeController>{
         ),
       ),
     );
-  }
+  }    
 }
+  
