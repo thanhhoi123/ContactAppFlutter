@@ -17,22 +17,25 @@ class PersonAdapter extends TypeAdapter<Person> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Person(
-      name: fields[0] as String,
-      phone: fields[1] as String,
-      email: fields[2] as String,
+      name: fields[0] as String?,
+      phone: fields[1] as String?,
+      email: fields[2] as String?,
+      image: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Person obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.phone)
       ..writeByte(2)
-      ..write(obj.email);
+      ..write(obj.email)
+      ..writeByte(3)
+      ..write(obj.image);
   }
 
   @override

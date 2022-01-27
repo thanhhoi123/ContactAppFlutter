@@ -35,9 +35,16 @@ class HomeController extends GetxController {
   void onClose() {}
 
   void addPerson(){
-    listPerson!.add(new Person(name: nameAdd.toString(), phone: phoneAdd.toString(), email: emailAdd.toString()));
-    DB!.add(new Person(name: nameAdd.toString(), phone: phoneAdd.toString(), email: emailAdd.toString()));
+    Person person = new Person(name: nameAdd.toString(), phone: phoneAdd.toString(), email: emailAdd.toString(), image: selectedImagePath.toString()); 
+    listPerson!.add(person);
+    DB!.add(person);
     update();
+    selectedImagePath.value = '';
+  }
+
+  void deletePerson(int index){
+    listPerson!.removeAt(index);
+    DB!.deleteAt(index);
   }
 
   Future<void> pickImage(ImageSource source) async{
@@ -47,9 +54,6 @@ class HomeController extends GetxController {
     }
     {
       selectedImagePath.value = image!.path;
-    } 
-
-    
-
+    }     
   }
 }

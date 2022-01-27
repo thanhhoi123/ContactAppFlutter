@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,7 +25,9 @@ class HomeView extends GetView<HomeController> {
         itemCount: controller.DB!.values.length,
         itemBuilder: (context, index){
           return ListTile(
+            leading: Image.file(File(controller.listPerson![index]!.image.toString())),
             title: Text('${controller.listPerson![index]!.name}'),
+            onLongPress: () => controller.deletePerson(index),
           );
         },
       )
